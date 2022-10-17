@@ -40,3 +40,24 @@
 #include "llvm/Transforms/CFGuard.h"
 #include <memory>
 #include <string>
+
+using namespace llvm;
+
+/* static cl::opt<bool> ???("RVQ",
+    cl::desc("Enable???"),
+    cl::init(true), cl::Hidden);
+*/
+
+/* static cl::opt<???>
+    Enable???("RVQ",
+*/
+
+extern "C" LLVM_EXTERNAL_VISIBILTY void LLVMInitializeRVQTarget(){
+    // Resgister the target
+    RegisterTargetMachine<RVQTargetMachine> X(getTheRVQ32Target());
+    RegisterTargetMachine<RVQTargetMachine> Y(getTheRVQ64Target());
+
+    // ???
+}
+
+
