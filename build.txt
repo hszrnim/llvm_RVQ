@@ -1,0 +1,10 @@
+procedures to build project:
+
+1. mkdir (file_name)
+2. cd ~/path/to/(file_name)
+3. git clone https://github.com/hszrnim/llvm_RVQ.git
+4. mkdir build install
+5. cd build
+6. make ../llvm-project/llvm -G Ninja -DCMAKE_BUILD_TYPE="Release" -DCMAKE_INSTALL_PREFIX=../llvm-install -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra;cross-project-tests;lld" -DLLVM_TARGETS_TO_BUILD="RISCV" -DBUILD_SHARED_LIBS=ON
+7. ninja all -j
+8. ninja install
