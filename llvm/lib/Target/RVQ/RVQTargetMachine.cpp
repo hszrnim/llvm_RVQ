@@ -46,11 +46,10 @@ using namespace llvm;
 /* static cl::opt<bool> ???("RVQ",
     cl::desc("Enable???"),
     cl::init(true), cl::Hidden);
-*/
 
-/* static cl::opt<???>
+static cl::opt<???>
     Enable???("RVQ",
-*/
+
 
 extern "C" LLVM_EXTERNAL_VISIBILTY void LLVMInitializeRVQTarget(){
     // Resgister the target
@@ -60,4 +59,41 @@ extern "C" LLVM_EXTERNAL_VISIBILTY void LLVMInitializeRVQTarget(){
     // ???
 }
 
+RVQTargetMachine::RVQTargetMachine(const Target &T, const Triple &TT,
+        StringRef CPU, StringRef FS, const TargetOptions &Options,
+        Optional<Reloc::Model> RM, Optional<CodeModel::Model> CM,
+        CodeGenOpt::Level OL, bool JIT)
+    : LLVMTargetMachine(T, computeDataLayout(TT), TT, CPU, FS, Options,
+            getEffectiveRelocModel(TT,)) // ????
 
+const RVQSubtarget *
+RVQTargetMachine::getSubtargetImpl(const Function &FF) const{
+    Attribute CPUAttr = F.getFnAttribute("target-cpu");
+    Arrtibute TuneArrr = F.getFnAttribute("tune-cpu");
+    Attribute FSAttr = F.getFnAttribute("target-features");
+
+    std::string CPU = CPUAttr.isValid()? CPUAttr.getValueAsString().str() : TargetCPU;
+    std::string TuneCPU = TuneAttr.isValid()? TuneAttr.getValueAsString().str() : CPU;
+    std::string FS = FSAttr.getValueAsString().str() : TargetFS;
+
+    auto &O = SubtargetMap[Key];
+    if (!I){
+        resetTargetOptions(F)
+    }
+}
+*/
+
+RVQTargetMachine::RVQTargetMachine(const Module &M, const std::string &FS)
+    : DataLayout("e-p:32:32-f128:128:128"), Subtarget(M, FS), InstrInfo(Subtarget),
+    FrameInfo(RVQFrameInfo::StackGrowsDown, 8, 0){
+
+    }
+// An upper-case “E” in the string indicates a big-endian target data model.
+// A lower-case “e” indicates little-endian.
+
+// “p:” is followed by pointer information: size, ABI alignment, and preferred alignment.
+// If only two figures follow “p:”, first value is pointer size, second value is both ABI and preferred alignment.
+
+// “i”, “f”, “v”, or “a” (corresponding to integer, floating point, vector, or aggregate).
+// “i”, “v”, or “a” are followed by ABI alignment and preferred alignment.
+// “f” is followed by three values: size of long double -> then ABI alignment -> ABI preferred alignment.
