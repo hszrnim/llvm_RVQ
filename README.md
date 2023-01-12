@@ -2,7 +2,7 @@
 
 Sup guys, I'm the author of this project, hszrnim.
 It's my pleasure to share this project with you.
-This is a C++/C to RISCV (Quantr format) compiler based on the LLVM compiler,
+This is a C++/C to RISCV compiler based on the LLVM compiler,
 for further CPU development.
 
 Instead of simply translating between languages,
